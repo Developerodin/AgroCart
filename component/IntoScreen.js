@@ -1,35 +1,132 @@
-import { View, Text, Image, StyleSheet, SafeAreaView, Dimensions, ImageBackground, TouchableOpacity, StatusBar } from 'react-native'
+import { View, Text, Image, StyleSheet, SafeAreaView, Dimensions, ImageBackground, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
 import React from 'react'
 import Onboard1Img from '../Assets/board1.png'
 import TextBox from '../Assets/text-img.png'
 import NextBtn from '../Assets/next-btn.png'
 import Onboarding from 'react-native-onboarding-swiper';
 
-const{width,height}=Dimensions.get("screen")
+const { width, height } = Dimensions.get("screen")
 
 export default function IntoScreen() {
-    return (
-        <SafeAreaView style={styles.container}>
-            <StatusBar barStyle={"dark-content"} backgroundColor={"#5AC2681A"} />
 
+    function Onboardingtitle() {
+        return (
+            <ImageBackground source={TextBox} resizeMode='contain' style={styles.quotes_section}>
+                <View>
+                    <Text style={styles.txtHead}>
+                        Buy Groceries Easily
+                    </Text>
 
-            <TouchableOpacity style={styles.firstdiv} onPress={() => navigation.navigate('Login')}>
-                <Text style={styles.text}>skip</Text>
-                <Image source={NextBtn} style={styles.next} />
-            </TouchableOpacity>
+                    <Text style={styles.txtHead}>
+                        with Us
+                    </Text>
 
-            <Onboarding
-                pages={[
-                    {
-                        backgroundColor: '#5AC2681A',
-                        image: <Image source={Onboard1Img} />,
-                        title: 'Onboarding',
-                        subtitle: 'Done with React Native Onboarding Swiper',
-                    },
+                    <Text style={styles.txtHead2}>
+                        It is a long established fact that a reader
+                        will be distracted by the readable.
+                    </Text>
+                </View>
+
+                <TouchableOpacity style={styles.nextbtn}>
+                    <Image source={NextBtn} style={styles.nextimg} />
+                </TouchableOpacity>
+            </ImageBackground>
+        )
+    }
+
+    const CustomDot = ({ selected }) => {
+        return (
+            <View
+                style={[
+                    styles.dot,
+                    { backgroundColor: selected ? '#4CAF50' : '#D8D8D8' },
                 ]}
             />
+        );
+    };
 
-            {/* <ImageBackground source={TextBox} resizeMode='cover' style={styles.quotes_section}>
+    const CustomNextButton = ({ ...props }) => (
+        <TouchableOpacity {...props} style={styles.nextButton}>
+            <Text style={styles.nextButtonText}>→</Text>
+        </TouchableOpacity>
+    );
+    return (
+        <>
+            <StatusBar barStyle={"dark-content"} backgroundColor={"#5AC2681A"} />
+            <ScrollView style={styles.container}>
+
+
+                <TouchableOpacity style={styles.firstdiv}>
+                    <Text style={styles.text}>skip</Text>
+                    <Image source={NextBtn} style={styles.next} />
+                </TouchableOpacity>
+
+                <View style={{ flex: 1}}>
+                    {/* <Onboarding
+                        pages={[
+                            {
+                                title: <Onboardingtitle />,
+                                backgroundColor: '#5AC2681A',
+                                image: (
+                                    <Image source={Onboard1Img} style={styles.OnboardingImage} />
+                                ),
+                            },
+                            {
+                                title: <Onboardingtitle />,
+                                backgroundColor: '#5AC2681A',
+                                image: (
+                                    <Image source={Onboard1Img} />
+                                ),
+                            }
+                        ]}
+                    /> */}
+
+                    <Onboarding
+                        onSkip={() => navigation.replace("Home")}
+                        onDone={() => navigation.replace("Home")}
+
+                        DotComponent={CustomDot}
+                        NextButtonComponent={CustomNextButton}
+                        DoneButtonComponent={CustomNextButton}
+                        pages={[
+                            {
+                                backgroundColor: '#5AC2681A',
+                                image: (
+                                    <Image
+                                        source={Onboard1Img}
+                                        style={{ width: width, height: height/2,resizeMode:'contain',backgroundColor:"green" }}
+                                    />
+                                ),
+                                title: <Onboardingtitle/>
+                            },
+                            {
+                                backgroundColor: '#5AC2681A',
+                                image: (
+                                    <Image
+                                        source={Onboard1Img}
+                                        style={{ width: 300, height: 300 }}
+                                    />
+                                ),
+                                title: 'We Deliver Groceries at Your Doorstep',
+                                subtitle: 'It is a long established fact that a reader will be distracted by the readable.',
+                            },
+                            {
+                                backgroundColor: '#5AC2681A',
+                                image: (
+                                    <Image
+                                        source={Onboard1Img}
+                                        style={{ width: 300, height: 300 }}
+                                    />
+                                ),
+                                title: 'One Store For All Your Grocery Needs',
+                                subtitle: 'It is a long established fact that a reader will be distracted by the readable.',
+                            },
+                        ]}
+                    />
+                </View>
+
+
+                {/* <ImageBackground source={TextBox} resizeMode='cover' style={styles.quotes_section}>
                 <View>
                     <Text style={styles.txtHead}>
                         Buy Groceries Easily
@@ -49,27 +146,25 @@ export default function IntoScreen() {
                     <Image source={NextBtn} style={styles.nextimg} />
                 </TouchableOpacity>
             </ImageBackground> */}
-            {/* <Image style = {styles.textimg} source={TextBox}/> */}
-        </SafeAreaView>
+                {/* <Image style = {styles.textimg} source={TextBox}/> */}
+            </ScrollView>
+        </>
 
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: '#5AC2681A',
-        flex:1
+        backgroundColor: '#5AC2681A',
+        // flex:1,
     },
-
     firstdiv: {
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         flexDirection: 'row',
-
     },
-
     board1: {
-        width:width,
+        width: width,
         marginTop: 50,
     },
 
@@ -95,16 +190,9 @@ const styles = StyleSheet.create({
         // marginBottom: 40
     },
     quotes_section: {
-        position: 'absolute',
-        bottom: 30,
-        flex: 1,
-        paddingVertical: 100,
-        paddingHorizontal: 30,
-        // marginLeft:5
-        // resizeMode:"contain"
-        // marginHorizontal: 8,
-        // justifyContent: "center",
-        // marginTop: 30
+        width: width,
+        height: height / 2,
+        backgroundColor:"red"
     },
     txtHead: {
         fontWeight: "700",
@@ -124,7 +212,7 @@ const styles = StyleSheet.create({
     },
     nextbtn: {
         position: "absolute",
-        bottom: 20,
+        bottom: 70,
         right: 0,
         left: 0,
         alignItems: "center"
@@ -132,6 +220,11 @@ const styles = StyleSheet.create({
     nextimg: {
         width: 80,
         height: 80
+    },
+    OnboardingImage: {
+        width: width,
+        height: height / 2,
+        resizeMode: 'contain',
     }
 
 
